@@ -33,7 +33,16 @@ module SitePrism
     private
 
     def find_first *find_args
-      root_element.first *find_args
+      # Maintaining backwards compatibility
+      if !Capybara.methods.include?(:match)
+        begin
+          root_element.find *find_args
+        rescue Capybara::ElementNotFound
+          root_element.first *find_args
+        end
+      else
+        root_element.find *find_args
+      end
     end
 
     def find_all *find_args
