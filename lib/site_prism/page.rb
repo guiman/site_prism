@@ -54,7 +54,7 @@ module SitePrism
       if !Capybara.methods.include?(:match)
         begin
           find *find_args
-        rescue Capybara::ElementNotFound
+        rescue Capybara::Ambiguous
           first *find_args
         end
       else
